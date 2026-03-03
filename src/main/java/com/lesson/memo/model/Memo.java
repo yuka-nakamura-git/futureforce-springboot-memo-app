@@ -12,6 +12,23 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+enum Priority {
+    HIGH("高", "high"),
+    MEDIUM("中", "medium"),
+    LOW("低", "low");
+
+    private final String label;
+    private final String cssClass;
+
+    Priority(String label, String cssClass) {
+        this.label = label;
+        this.cssClass = cssClass;
+    }
+
+    public String getLabel() { return label; }
+    public String getCssClass() { return cssClass; }
+}
+
 @Entity
 @Data
 public class Memo {
@@ -27,6 +44,8 @@ public class Memo {
     @NotBlank(message = "内容を入力してください")
     @Column(nullable = false, length = 1000)
     private String content;
+    
+    private Priority priority;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;

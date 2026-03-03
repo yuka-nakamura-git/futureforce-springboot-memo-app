@@ -21,6 +21,9 @@
         <div class="notes-grid">
             <div class="note-card" th:each="memo : ${memos}">
                 <div class="note-card-header">
+					<span th:if="${memo.priority}" 
+         				  th:class="|note-badge ${memo.priority.cssClass}|" 
+         				  th:text="${memo.priority.label}"></span>
                     <h3 class="note-card-title" th:text="${memo.title}">タイトル</h3>
                 </div>
                 <div class="note-card-content">

@@ -30,7 +30,8 @@ public class MemoController {
 
     @GetMapping
     public String list(Model model) {
-        List<Memo> memos = memoRepository.findAll();
+    	// findAll() を並び替え用のメソッドに変更
+        List<Memo> memos = memoRepository.findAllByOrderByPriorityAsc();
         model.addAttribute("memos", memos);
         return "memo-list";
     }
@@ -107,6 +108,8 @@ public class MemoController {
 
         memoToUpdate.setTitle(memo.getTitle());
         memoToUpdate.setContent(memo.getContent());
+        // 追加：優先度を更新対象に含める
+        memoToUpdate.setPriority(memo.getPriority());
         memoToUpdate.setUpdatedAt(LocalDateTime.now());
         memoRepository.save(memoToUpdate);
 
