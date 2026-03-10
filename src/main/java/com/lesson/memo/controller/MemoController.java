@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lesson.memo.model.Memo;
@@ -27,6 +28,24 @@ public class MemoController {
 
     @Autowired
     private MemoRepository memoRepository;
+    
+    @GetMapping("/search")
+    public String search(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+        List<Memo> memos;
+
+        // キーワードが空（null または 空文字）でない場合
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // タイトルと内容の両方に対して同じキーワードで検索をかける
+            memos = memoRepository.findByTitleContainingOrContentContainingOrderByPriorityAsc(keyword, keyword);
+        } else {
+            // キーワードが空の場合は全件表示
+            memos = memoRepository.findAllByOrderByPriorityAsc();
+        }
+
+        model.addAttribute("memos", memos);
+        model.addAttribute("keyword", keyword); // 入力欄に値を残すために渡す
+        return "memo-list";
+    }
 
     @GetMapping
     public String list(Model model) {
