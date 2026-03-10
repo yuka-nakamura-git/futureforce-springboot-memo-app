@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -17,6 +18,9 @@
         </div>
         <div class="note-card note-card-large">
             <div class="note-card-header">
+				<span th:if="${memo.priority}" 
+          			  th:class="|note-badge ${memo.priority.cssClass}|" 
+          			  th:text="${memo.priority.label}"></span>
                 <h2 class="note-card-title" th:text="${memo.title}">タイトル</h2>
             </div>
             <div class="note-card-content">
