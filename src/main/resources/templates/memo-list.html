@@ -13,6 +13,15 @@
     <div class="container">
         <div class="header">
             <h1 class="app-title">メモ一覧</h1>
+            <div class="search-container" style="margin-bottom: 20px;">
+    			<form th:action="@{/memo/search}" method="get" class="search-form" style="display: flex; gap: 10px;">
+       			<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワードを入力..." class="form-control" style="flex-grow: 1;">
+        		<button type="submit" class="btn btn-primary">
+            	<i class="ri-search-line"></i> 検索
+        		</button>
+        		<a th:href="@{/memo}" class="btn btn-outline">クリア</a>
+    			</form>
+			</div>		
             <a th:href="@{/memo/new}" class="btn btn-primary">
                 <i class="ri-add-circle-line"></i> 新規メモ
             </a>
